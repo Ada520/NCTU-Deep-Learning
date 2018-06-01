@@ -1,0 +1,7 @@
+python3 scripts/prepro_labels.py --input_json data/dataset_coco.json --output_json data/cocotalk.json --output_h5 data/cocotalk
+python3 scripts/prepro_feats.py --input_json data/dataset_coco.json --output_dir data/cocotalk --images_root data/
+
+python3 train.py --id st --input_json data/cocotalk.json --input_fc_dir data/cocotalk_fc --input_att_dir data/cocotalk_att --input_label_h5 data/cocotalk_label.h5 --batch_size 10 --learning_rate 5e-4 --learning_rate_decay_start 0 --scheduled_sampling_start 0 --checkpoint_path part1_beam1 --save_checkpoint_every 1 --val_images_use 5000 --beam_size 1 --max_epochs 1
+
+
+python3 eval.py --model log_st/model-best.pth --infos_path log_st/infos_st-best.pkl --image_folder test --num_images -1 --batch_size 1
